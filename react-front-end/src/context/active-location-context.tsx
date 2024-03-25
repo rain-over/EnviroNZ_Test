@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { defualtPosition } from '../lib/contants';
-import { Suburb } from '../lib/types';
+import { Suburb, ActiveLocationType } from '../lib/types';
 
-// const defaultLocation: Position = [-41.2728, 173.2994];
 const [defaultLatitude, defualtLongitude] = defualtPosition;
 
 const defaultLocation: Suburb = {
@@ -17,8 +16,8 @@ type ActiveLocationContextProviderProps = {
 };
 
 type ActiveLocationContextProviderType = {
-  activeLocation: Suburb;
-  setActiveLocation: React.Dispatch<React.SetStateAction<Suburb>>;
+  activeLocation: ActiveLocationType;
+  setActiveLocation: React.Dispatch<React.SetStateAction<ActiveLocationType>>;
 };
 
 export const ActiveLocationContext =
@@ -27,7 +26,10 @@ export const ActiveLocationContext =
 export default function ActiveLocationContextProvider({
   children,
 }: ActiveLocationContextProviderProps) {
-  const [activeLocation, setActiveLocation] = useState<Suburb>(defaultLocation);
+  const [activeLocation, setActiveLocation] = useState<ActiveLocationType>({
+    result: defaultLocation,
+    searched: defualtPosition,
+  });
 
   return (
     <ActiveLocationContext.Provider

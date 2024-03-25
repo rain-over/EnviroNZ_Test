@@ -10,3 +10,8 @@ export type Suburb = {
   latitude: number;
   longitude: number;
 };
+
+export type ActiveLocationType = {
+  result: Suburb;
+  searched: Position;
+};

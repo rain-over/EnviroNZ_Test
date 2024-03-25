@@ -16,9 +16,11 @@ type Suburb = {
 const SuburbSearch = () => {
   const {
     activeLocation: {
-      suburbName,
-      latitude: defaultLatitude,
-      longitude: defualtLongitude,
+      result: {
+        suburbName,
+        latitude: defaultLatitude,
+        longitude: defualtLongitude,
+      },
     },
     setActiveLocation,
   } = useActiveLocationContext();
@@ -42,7 +44,7 @@ const SuburbSearch = () => {
         throw new Error('Failed to fetch data');
       }
       const data: Suburb = await response.json();
-      setActiveLocation(data);
+      setActiveLocation({ result: data, searched: [latitude, longitude] });
     } catch (error) {
       console.error('Error fetching data:', error);
     }
