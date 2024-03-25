@@ -1,5 +1,10 @@
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { useActiveLocationContext } from '../context/active-location-context';
+import { SearchLimit } from '../lib/contants';
+import { Position } from '../lib/types';
+import SuburbSearchSlider from './SuburbSearchSlider';
 
 type Suburb = {
   id: number;
@@ -9,12 +14,20 @@ type Suburb = {
 };
 
 const SuburbSearch = () => {
-  const [latitude, setLatitude] = useState<number>(0);
-  const [longitude, setLongitude] = useState<number>(0);
   const {
-    activeLocation: { suburbName },
+    activeLocation: {
+      suburbName,
+      latitude: defaultLatitude,
+      longitude: defualtLongitude,
+    },
     setActiveLocation,
   } = useActiveLocationContext();
+
+  const [latitude, setLatitude] = useState<number>(defaultLatitude);
+  const [longitude, setLongitude] = useState<number>(defualtLongitude);
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const { minLatitude, maxLatitude, minLongitude, maxLongitude } = SearchLimit;
 
   const search = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,49 +50,65 @@ const SuburbSearch = () => {
     console.log('searched');
   };
 
+  const handleSetPosition = ([latitude, longitude]: Position) => {
+    console.log([latitude, longitude]);
+    setLatitude(latitude);
+    setLongitude(longitude);
+  };
+
+  const renderTextSearch = () => {
+    return (
+      <div className={`search-form-textbox ${expanded ? 'expanded' : ''}`}>
+        <div>
+          <label>Latitude: </label>
+          <input
+            max={maxLatitude}
+            min={minLatitude}
+            required
+            step={0.0001}
+            type="number"
+            value={latitude}
+            onChange={(e) => setLatitude(e.target.valueAsNumber)}
+          />
+        </div>
+        <div>
+          <label>Longitude: </label>
+          <input
+            max={maxLongitude}
+            min={minLongitude}
+            required
+            step={0.0001}
+            type="number"
+            value={longitude}
+            onChange={(e) => setLongitude(e.target.valueAsNumber)}
+          />
+        </div>
+      </div>
+    );
+  };
+
   const renderSearch = () => {
     return (
       <div className="search-form-container">
         <form onSubmit={search}>
-          <label>
-            Latitude:{' '}
-            <input
-              type="number"
-              step="any"
-              value={latitude}
-              required
-              placeholder="Latitude"
-              onChange={(e) => setLatitude(e.target.valueAsNumber)}
-            />
-          </label>
-          <label>
-            Longitude:{' '}
-            <input
-              type="number"
-              step="any"
-              value={longitude}
-              required
-              onChange={(e) => setLongitude(e.target.valueAsNumber)}
-            />
-          </label>
+          <SuburbSearchSlider
+            currentPosition={[latitude, longitude]}
+            onSlide={handleSetPosition}
+          />
+          {renderTextSearch()}
           <button className="button" type="submit">
             Suburb Search
           </button>
         </form>
+        <IconButton onClick={() => setExpanded(!expanded)}>
+          {expanded ? <ExpandLess /> : <ExpandMore />}
+        </IconButton>
       </div>
     );
   };
   return (
     <div className={`search-container ${suburbName !== '' ? 'top' : ''}`}>
       {renderSearch()}
-      {/* {activeLocation && (
-        <div>
-          <h2>Closest Suburb:</h2>
-          <p>Name: {activeLocation.suburbName}</p>
-          <p>Latitude: {activeLocation.latitude}</p>
-          <p>Longitude: {activeLocation.longitude}</p>
-        </div>
-      )} */}
     </div>
   );
 };

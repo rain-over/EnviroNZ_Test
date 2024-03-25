@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { useActiveLocationContext } from '../context/active-location-context';
-import { MapContainer, TileLayer, Marker, Tooltip } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import { Icon } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
+import { useActiveLocationContext } from '../context/active-location-context';
 
 const markerIcon = new Icon({
   iconUrl: 'marker-icon.png',
   iconSize: [35, 35], // size of the icon
 });
+
 const MapResult = () => {
   const {
     activeLocation: { latitude, longitude, suburbName },

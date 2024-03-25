@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Position, Suburb } from '../lib/types';
+import { defualtPosition } from '../lib/contants';
+import { Suburb } from '../lib/types';
 
 // const defaultLocation: Position = [-41.2728, 173.2994];
+const [defaultLatitude, defualtLongitude] = defualtPosition;
+
 const defaultLocation: Suburb = {
   id: 0,
   suburbName: '',
-  latitude: -36.8508,
-  longitude: 174.7645,
+  latitude: defaultLatitude,
+  longitude: defualtLongitude,
 };
 
 type ActiveLocationContextProviderProps = {
