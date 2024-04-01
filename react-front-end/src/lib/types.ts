@@ -1,6 +1,6 @@
 // export type Coordinates = [latitude: number, longitude: number];
 
-export type PositionType = 'latitude' | 'longitude';
+export type Axis = 'latitude' | 'longitude';
 
 export type Position = [number, number];
 

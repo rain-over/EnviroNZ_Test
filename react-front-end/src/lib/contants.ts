@@ -7,4 +7,6 @@ export const SearchLimit = {
   maxLongitude: 175,
 } as const;
 
-export const defualtPosition: Position = [-36.8508, 174.7645];
+export const defaultPosition: Position = [-36.8508, 174.7645];
+
+export const step: number = 0.00001;

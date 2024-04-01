@@ -1,8 +1,6 @@
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useActiveLocationContext } from '../context/active-location-context';
-import { SearchLimit } from '../lib/contants';
+import { SearchLimit, defaultPosition } from '../lib/contants';
 import { Position } from '../lib/types';
 import SuburbSearchSlider from './SuburbSearchSlider';
 
@@ -13,29 +11,36 @@ type Suburb = {
   longitude: number;
 };
 
+const { minLatitude, maxLatitude, minLongitude, maxLongitude } = SearchLimit;
+
 const SuburbSearch = () => {
   const {
     activeLocation: {
       result: {
         suburbName,
         latitude: defaultLatitude,
-        longitude: defualtLongitude,
+        longitude: defaultLongitude,
       },
     },
     setActiveLocation,
   } = useActiveLocationContext();
 
-  const [latitude, setLatitude] = useState<number>(defaultLatitude);
-  const [longitude, setLongitude] = useState<number>(defualtLongitude);
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [position, setPosition] = useState<Position>([
+    defaultLatitude,
+    defaultLongitude,
+  ]);
 
-  const { minLatitude, maxLatitude, minLongitude, maxLongitude } = SearchLimit;
+  const handleSetPosition = ([latitude, longitude]: Position) => {
+    console.log([latitude, longitude]);
+    setPosition([latitude, longitude]);
+  };
 
-  const search = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSearch = async () => {
+    console.log(position);
     try {
-      const env = 'http://localhost:5015';
+      const env = 'http://localhost:5015'; //temp
+
+      const [latitude, longitude] = position;
       const url = `${env}/suburb?latitude=${latitude.toString()}&longitude=${longitude.toString()}`;
 
       const response = await fetch(url);
@@ -52,65 +57,22 @@ const SuburbSearch = () => {
     console.log('searched');
   };
 
-  const handleSetPosition = ([latitude, longitude]: Position) => {
-    console.log([latitude, longitude]);
-    setLatitude(latitude);
-    setLongitude(longitude);
-  };
-
-  const renderTextSearch = () => {
-    return (
-      <div className={`search-form-textbox ${expanded ? 'expanded' : ''}`}>
-        <div>
-          <label>Latitude: </label>
-          <input
-            max={maxLatitude}
-            min={minLatitude}
-            required
-            step={0.0001}
-            type="number"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.valueAsNumber)}
-          />
-        </div>
-        <div>
-          <label>Longitude: </label>
-          <input
-            max={maxLongitude}
-            min={minLongitude}
-            required
-            step={0.0001}
-            type="number"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.valueAsNumber)}
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const renderSearch = () => {
-    return (
-      <div className="search-form-container">
-        <form onSubmit={search}>
-          <SuburbSearchSlider
-            currentPosition={[latitude, longitude]}
-            onSlide={handleSetPosition}
-          />
-          {renderTextSearch()}
-          <button className="button" type="submit">
-            Suburb Search
-          </button>
-        </form>
-        <IconButton onClick={() => setExpanded(!expanded)}>
-          {expanded ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
-      </div>
-    );
-  };
   return (
     <div className={`search-container ${suburbName !== '' ? 'top' : ''}`}>
-      {renderSearch()}
+      <SuburbSearchSlider
+        onSlide={handleSetPosition}
+        sliderProps={{
+          defaultPosition,
+          max: { latitude: maxLatitude, longitude: maxLongitude },
+          min: { latitude: minLatitude, longitude: minLongitude },
+        }}
+      />
+      <input
+        aria-label="suburb-search-button"
+        type="button"
+        value="Suburb Search"
+        onClick={handleSearch}
+      />
     </div>
   );
 };

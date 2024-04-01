@@ -51,7 +51,7 @@ const MapResult = () => {
         />
         <Marker position={position} icon={searchedMarkerIcon}>
           <Tooltip offset={[10, 0]} direction="right" permanent>
-            {`${distance.toFixed(2)}km to closest suburb`}
+            {`[${searchedLatitude}, ${searchedLongitude}]`}
           </Tooltip>
         </Marker>
         <Marker position={[latitude, longitude]} icon={markerIcon}>
@@ -60,7 +60,11 @@ const MapResult = () => {
           </Tooltip>
         </Marker>
 
-        <Polyline positions={[position, [latitude, longitude]]} color="blue" />
+        <Polyline positions={[position, [latitude, longitude]]} color="blue">
+          <Tooltip offset={[10, 0]} direction="right">
+            {`${distance.toFixed(2)} km to closest suburb`}
+          </Tooltip>
+        </Polyline>
       </MapContainer>
     );
   };

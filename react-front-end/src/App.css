@@ -21,6 +21,10 @@ h6 {
   text-decoration: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .App {
   position: relative;
   text-align: center;
@@ -48,6 +52,19 @@ h6 {
   top: 40%;
   transform: translate(-50%, 0);
   z-index: 100;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e1e1e1;
+  border-radius: 60px;
+  padding: 20px;
+  padding-bottom: 30px;
+  width: 620px;
+}
+
+.search-container > input {
+  padding: 1em;
+  border-radius: 60px;
+  border: 1px solid #2e7d32;
+  cursor: pointer;
 }
 
 .search-container.top {
@@ -58,29 +75,9 @@ h6 {
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid #e1e1e1;
   border-radius: 60px;
-  padding: 5px;
+  padding: 20px;
+  padding-bottom: 30px;
   width: 620px;
-}
-
-.search-form-container > button {
-  position: absolute;
-  top: 110px;
-  right: 40px;
-}
-.search-form-container form {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 0.5em;
-}
-
-.search-form-container input {
-  border: 1px solid #e1e1e1;
-  border-radius: 10px;
-  font-size: 1em;
-  padding: 0.5em 0.8em;
-  width: 150px;
 }
 
 .search-form-textbox {
@@ -97,4 +94,38 @@ h6 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.search-slider fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.search-slider fieldset .search-slider-validation {
+  color: red;
+  font-size: 0.9em;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.search-slider div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 600px;
+}
+
+.search-slider input {
+  border: 1px solid #a4c8ad;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+.search-slider input:focus-visible {
+  border: 1px solid #2e7d32;
+  outline: 1px solid #2e7d32;
 }

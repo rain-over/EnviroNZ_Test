@@ -32,3 +32,14 @@ export const getDistanceBetweenMarkers = (
 
   return distance;
 };
+
+export const is_numberInRange = (
+  value: number,
+  min: number,
+  max: number
+): boolean => {
+  return value >= min && value <= max;
+};
+
+export const capitalize = (word: string) =>
+  word.charAt(0).toUpperCase() + word.slice(1);

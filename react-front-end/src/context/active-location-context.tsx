@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useState } from 'react';
-import { defualtPosition } from '../lib/contants';
+import { defaultPosition } from '../lib/contants';
 import { Suburb, ActiveLocationType } from '../lib/types';
 
-const [defaultLatitude, defualtLongitude] = defualtPosition;
+const [defaultLatitude, defaultLongitude] = defaultPosition;
 
 const defaultLocation: Suburb = {
   id: 0,
   suburbName: '',
   latitude: defaultLatitude,
-  longitude: defualtLongitude,
+  longitude: defaultLongitude,
 };
 
 type ActiveLocationContextProviderProps = {
@@ -28,7 +28,7 @@ export default function ActiveLocationContextProvider({
 }: ActiveLocationContextProviderProps) {
   const [activeLocation, setActiveLocation] = useState<ActiveLocationType>({
     result: defaultLocation,
-    searched: defualtPosition,
+    searched: defaultPosition,
   });
 
   return (
