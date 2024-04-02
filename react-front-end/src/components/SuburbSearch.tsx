@@ -36,7 +36,6 @@ const SuburbSearch = () => {
   };
 
   const handleSearch = async () => {
-    console.log(position);
     try {
       const env = 'http://localhost:5015'; //temp
 
@@ -49,12 +48,11 @@ const SuburbSearch = () => {
         throw new Error('Failed to fetch data');
       }
       const data: Suburb = await response.json();
+
       setActiveLocation({ result: data, searched: [latitude, longitude] });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.log('Error fetching data:', error);
     }
-
-    console.log('searched');
   };
 
   return (

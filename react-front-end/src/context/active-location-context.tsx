@@ -15,7 +15,7 @@ type ActiveLocationContextProviderProps = {
   children: React.ReactNode;
 };
 
-type ActiveLocationContextProviderType = {
+export type ActiveLocationContextProviderType = {
   activeLocation: ActiveLocationType;
   setActiveLocation: React.Dispatch<React.SetStateAction<ActiveLocationType>>;
 };
