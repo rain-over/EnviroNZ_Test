@@ -8,22 +8,15 @@ namespace aspnet_api.Controllers
     {
         private readonly ISuburbService _suburbService;
 
-        public SuburbController()
+        public SuburbController(ISuburbService suburbService)
         {
-            _suburbService = new SuburbService();
+            _suburbService = suburbService;
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetAllSuburbs()
-        //{
-        //    var suburbs = await _suburbService.GetSuburb();
-        //    return Ok(suburbs);
-        //}
 
         [HttpGet]
         public async Task<IActionResult> GetClosestSuburb([FromQuery] double latitude, [FromQuery] double longitude)
         {
-            var suburb = await _suburbService.GetSuburb(latitude, longitude);
+            var suburb = await _suburbService.GetClosestSuburbFromPoint(latitude, longitude);
 
             return Ok(suburb);
 

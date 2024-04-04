@@ -4,8 +4,6 @@ namespace aspnet_api
 {
     public interface ISuburbService
     {
-        Task<List<Suburb>> GetSuburb();
-
-        Task<Suburb> GetSuburb(double latitude, double longitude);
+        Task<Suburb> GetClosestSuburbFromPoint(double latitude, double longitude);
     }
 }
