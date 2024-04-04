@@ -1,21 +1,15 @@
 const degreesToRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
-export const debounce = (fn: Function, delay = 500) => {
-  let timetoutId: NodeJS.Timeout;
-
-  return (...args: any) => {
-    clearTimeout(timetoutId);
-    timetoutId = setTimeout(() => fn(...args), delay);
-  };
-};
-
+/**
+ * using Haversine Formula
+ */
 export const getDistanceBetweenMarkers = (
   lat1: number,
   lon1: number,
   lat2: number,
   lon2: number
 ) => {
-  const earthRadiusKm = 6371;
+  const earthRadiusKm = 6371; // Radius of the Earth in kilometers
 
   const dLat = degreesToRadians(lat2 - lat1);
   const dLon = degreesToRadians(lon2 - lon1);

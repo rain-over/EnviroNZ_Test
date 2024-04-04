@@ -96,7 +96,7 @@ export default function SuburbSearchSlider({
         {errors[axis] && (
           <span
             aria-label={`${axis}-range-error`}
-            className="search-slider-validation"
+            className="search-slider-validation error"
           >
             Value must be between {min} to {max}
           </span>

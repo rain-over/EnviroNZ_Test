@@ -25,6 +25,12 @@ h6 {
   display: none;
 }
 
+.error {
+  color: red;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
 .App {
   position: relative;
   text-align: center;
@@ -105,8 +111,6 @@ h6 {
 }
 
 .search-slider fieldset .search-slider-validation {
-  color: red;
-  font-size: 0.9em;
   text-align: right;
   margin-right: 20px;
 }

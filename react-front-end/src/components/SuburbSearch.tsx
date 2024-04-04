@@ -29,6 +29,7 @@ const SuburbSearch = () => {
     defaultLatitude,
     defaultLongitude,
   ]);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const handleSetPosition = ([latitude, longitude]: Position) => {
     console.log([latitude, longitude]);
@@ -49,8 +50,10 @@ const SuburbSearch = () => {
       }
       const data: Suburb = await response.json();
 
+      setHasError(false);
       setActiveLocation({ result: data, searched: [latitude, longitude] });
     } catch (error) {
+      setHasError(true);
       console.log('Error fetching data:', error);
     }
   };
@@ -71,6 +74,11 @@ const SuburbSearch = () => {
         value="Suburb Search"
         onClick={handleSearch}
       />
+      {hasError && (
+        <div aria-label={`search-has-error`} className="error">
+          An Error has occured. Please try again later.
+        </div>
+      )}
     </div>
   );
 };
